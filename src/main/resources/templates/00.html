@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        用户 李四 聊天窗口
+    </title>
+</head>
+<body>
+
+<script>
+    var ws = new WebSocket("ws://localhost:8902/chat");
+
+    function sendMsg(){
+        let text = document.getElementById("message").value;
+        if(text == "" || text == undefined){
+            return;
+        }
+        ws.send(text);
+        document.getElementById("message").value = "";
+
+        let oldSend = document.getElementById("haveSend").innerHTML;
+        document.getElementById("haveSend").innerHTML = oldSend + "<p>" + text + "</p>";
+    }
+
+
+        ws.onopen = function () {
+            ws.send("用户 李四，建立连接---");
+        }
+        ws.onmessage = function (eventMsg){
+            console.log(eventMsg);
+            console.log(eventMsg.data);
+            let oldReceive = document.getElementById("receive").innerHTML;
+            document.getElementById("receive").innerHTML = oldReceive + "<p>" + eventMsg.data + "</p>";
+        }
+
+        ws.onclose = function(msg){
+            console.log(msg);
+        }
+
+        ws.onerror = function (msg){
+            console.log(msg);
+        }
+
+</script>
+
+    <div style="padding-top: 20px;">
+        <input type="text" value="" style="width: 800px;height: 30px;font-max-size: large" id="message">
+        <input type="button" id="sendMsg" value="发送信息" style="cursor: pointer;" onclick="sendMsg()">
+    </div>
+    <div id="haveSend" style="width: 800px; float: left">
+        <p>已经发送的信息</p>
+    </div>
+    <div id="receive" style="width: 800px; float: left">
+        <p>接受到的信息</p>
+    </div>
+</body>
+</html>

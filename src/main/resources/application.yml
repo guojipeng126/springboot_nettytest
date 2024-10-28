@@ -1,0 +1,23 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /chat
+    encoding:
+      enabled: true
+      charset: UTF-8
+  tomcat:
+    accept-count: 1000
+    threads:
+      max: 1600
+      min-spare: 100
+    max-keep-alive-requests: 200
+    max-connections: 10000
+
+
+
+spring:
+  application:
+    name: springboot_nettytest
+gjp:
+  config:
+    label-name: gjp
